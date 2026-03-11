@@ -28,9 +28,9 @@ public sealed class LocalizedConsonantOption
     public ConsonantOption Option { get; }
     public string Name => Option switch
     {
-        ConsonantOption.ALL_N => Resources.ConsonantOption_ALL_N,
-        ConsonantOption.CONTINUE_BEFORE_VOWEL => Resources.ConsonantOption_CONTINUE_BEFORE_VOWEL,
-        ConsonantOption.SMALL_MOUSE => Resources.ConsonantOption_SMALL_MOUSE,
+        ConsonantOption.ALL_N => Res.ConsonantOption_ALL_N,
+        ConsonantOption.CONTINUE_BEFORE_VOWEL => Res.ConsonantOption_CONTINUE_BEFORE_VOWEL,
+        ConsonantOption.SMALL_MOUSE => Res.ConsonantOption_SMALL_MOUSE,
         _ => Option.ToString(),
     };
 
@@ -103,11 +103,11 @@ public sealed class MainWindowViewModel
 		{
 			using var cofd = new CommonOpenFileDialog()
 			{
-				Title = Resources.OpenYmmpDialogTitle,
+				Title = Res.OpenYmmpDialogTitle,
 				RestoreDirectory = true,
 				IsFolderPicker = false,
 			};
-			cofd.Filters.Add(new CommonFileDialogFilter(Resources.YmmpFileFilter, "*.ymmp"));
+			cofd.Filters.Add(new CommonFileDialogFilter(Res.YmmpFileFilter, "*.ymmp"));
 			if (cofd.ShowDialog() != CommonFileDialogResult.Ok)
 			{
 				return;
@@ -192,15 +192,15 @@ public sealed class MainWindowViewModel
 				{
 					if (CurrentYmmp is null)
 					{
-						Manager.Warn(Resources.YmmpNotLoadedTitle, Resources.YmmpNotLoadedMessage);
+						Manager.Warn(Res.YmmpNotLoadedTitle, Res.YmmpNotLoadedMessage);
 						return;
 					}
 
 					var sw = new System.Diagnostics.Stopwatch();
 					sw.Start();
 
-					var loading = Manager.Loading(Resources.SavingTitle, Resources.SavingMessage);
-					loading.Message = Resources.AnalyzingVoiceItemsMessage;
+					var loading = Manager.Loading(Res.SavingTitle, Res.SavingMessage);
+					loading.Message = Res.AnalyzingVoiceItemsMessage;
 					var ymmp = await YmmpUtil.CopyDeepAsync(CurrentYmmp);
 					var voiceItems = await YmmpUtil.ParseVoiceItemsAsync(ymmp);
 
@@ -211,12 +211,12 @@ public sealed class MainWindowViewModel
 					if (voiceItems is null)
 					{
 						Manager.Dismiss(loading);
-						Manager.Info(Resources.NoVoiceItemsTitle, Resources.NoVoiceItemsMessage);
+						Manager.Info(Res.NoVoiceItemsTitle, Res.NoVoiceItemsMessage);
 						return;
 					}
 
 					//filter exportable
-					loading.Message = Resources.FilteringExportItemsMessage;
+					loading.Message = Res.FilteringExportItemsMessage;
 					var vItems = voiceItems
 						.Where(v =>
 							Characters.Any(c => c.Name == v.Item.CharacterName)
@@ -262,13 +262,13 @@ public sealed class MainWindowViewModel
 					Debug.WriteLine($"TIME[FilterAPIVoiceAsync]:{sw.ElapsedMilliseconds}");
 
 					//出力
-					loading.Message = Resources.SavingFileMessage;
+					loading.Message = Res.SavingFileMessage;
 					var dir = Directory.Exists(CurrentYmmpPath)
 						? Path.GetDirectoryName(CurrentYmmpPath)!
 						: AppDomain.CurrentDomain.BaseDirectory;
 					using var csfd = new CommonSaveFileDialog()
 					{
-						Title = Resources.SaveYmmpDialogTitle,
+						Title = Res.SaveYmmpDialogTitle,
 						RestoreDirectory = true,
 						DefaultDirectory = dir,
 						DefaultFileName =
@@ -276,7 +276,7 @@ public sealed class MainWindowViewModel
 							+ (IsSaveBackup ? ".tmp" : "")
 							+ Path.GetExtension(CurrentYmmpPath),
 					};
-					csfd.Filters.Add(new CommonFileDialogFilter(Resources.YmmpFileFilter, "*.ymmp"));
+					csfd.Filters.Add(new CommonFileDialogFilter(Res.YmmpFileFilter, "*.ymmp"));
 
 					try
 					{
@@ -299,7 +299,7 @@ public sealed class MainWindowViewModel
 					SaveProjectConfig();
 
 					Manager.Dismiss(loading);
-					Manager.Info(Resources.SaveSuccessTitle, Resources.SaveSuccessMessage, true);
+					Manager.Info(Res.SaveSuccessTitle, Res.SaveSuccessMessage, true);
 
 					sw.Stop();
 					Debug.WriteLine($"TIME[SaveAsync]:{sw.ElapsedMilliseconds}");
@@ -361,7 +361,7 @@ public sealed class MainWindowViewModel
 		IDictionary<int, int> maxLayer
 	)
 	{
-		loading.Message = Resources.GeneratingCustomVoiceLipSyncMessage;
+		loading.Message = Res.GeneratingCustomVoiceLipSyncMessage;
 		var customVoices = await YmmpUtil.FilterCustomVoiceAsync(voiceItems);
 
 		sw.Stop();
@@ -405,7 +405,7 @@ public sealed class MainWindowViewModel
 		IDictionary<int, int> maxLayer
 	)
 	{
-		loading.Message = Resources.GeneratingApiVoiceLipSyncMessage;
+		loading.Message = Res.GeneratingApiVoiceLipSyncMessage;
 		var apiVoices = await YmmpUtil.FilterAPIVoiceAsync(voiceItems);
 
 		//APIボイスの口パク生成
@@ -515,12 +515,12 @@ public sealed class MainWindowViewModel
 			{
 				var lineName = v.Key switch
 				{
-					"a" => Resources.ALine,
-					"i" => Resources.ILine,
-					"u" => Resources.ULine,
-					"e" => Resources.ELine,
-					"o" => Resources.OLine,
-					"N" => Resources.NLine,
+					"a" => Res.ALine,
+					"i" => Res.ILine,
+					"u" => Res.ULine,
+					"e" => Res.ELine,
+					"o" => Res.OLine,
+					"N" => Res.NLine,
 					_ => "ERROR",
 				};
 

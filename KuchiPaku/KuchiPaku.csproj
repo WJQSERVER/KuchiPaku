@@ -2,7 +2,6 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net9.0-windows10.0.18362.0</TargetFramework>
-    <!-- <TargetFrameworks>net48;netcoreapp3.1;net5.0-windows;net6.0-windows</TargetFrameworks> -->
     <LangVersion>latest</LangVersion>
     <Nullable>Enable</Nullable>
     <UseWPF>true</UseWPF>
@@ -15,19 +14,15 @@
     <DebugSymbols Condition="'$(Configuration)' == 'Release'">false</DebugSymbols>
     <DebugType Condition="'$(Configuration)' == 'Release'">embedded</DebugType>
     <DebugType Condition="'$(Configuration)' == 'Debug'">embedded</DebugType>
-    <!-- info -->
     <Product>KuchiPaku</Product>
     <Description>KuchiPaku - A YMM4 lip sync support tool</Description>
     <Copyright>InuInu</Copyright>
     <NeutralLanguage>ja-JP</NeutralLanguage>
     <Version>0.1.0.0</Version>
-    <!-- AssemblyInfo プロパティ -->
     <AssemblyTitle>KuchiPaku</AssemblyTitle>
     <SupportedCultures>en-US;ja;zh-CN</SupportedCultures>
-    <!-- MinVer -->
     <MinVerTagPrefix>v</MinVerTagPrefix>
     <MinVerMinimumMajorMinor>0.1</MinVerMinimumMajorMinor>
-    <!-- Version hash -->
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -60,7 +55,6 @@
     <FluentValidationExcludedCultures Include="ar;el;he;hi;no;ro;sk;be;cs;cs-CZ;da;de;es;fa;fi;fr;it;ko;mk;nl;pl;pt;ru;sv;tr;uk;af-ZA;am-ET;ar-SA;az-Latn-AZ;be-BY;bg-BG;bn-BD;bs-Latn-BA;ca-ES;da-DK;de-DE;el-GR;en-GB;es-ES;es-MX;et-EE;eu-ES;fa-IR;fi-FI;fr-CA;fr-FR;gl-ES;ha-Latn-NG;he-IL;hi-IN;hr-HR;hu-HU;id-ID;is-IS;it-IT;ka-GE;kk-KZ;km-KH;kn-IN;ko-KR;lo-LA;lt-LT;lv-LV;mk-MK;ml-IN;ms-MY;nb-NO;nl-NL;nn-NO;pl-PL;pt-BR;pt-PT;ro-RO;ru-RU;sk-SK;sl-SI;sq-AL;sr-Latn-RS;sv-SE;sw-KE;ta-IN;te-IN;th-TH;tr-TR;uk-UA;uz-Latn-UZ;vi-VN;">
       <InProject>false</InProject>
     </FluentValidationExcludedCultures>
-    <!-- アプリに付与するファイル -->
     <Content Include="Scripts/*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -90,7 +84,6 @@
     <PackageReference Include="FluentWPF" Version="0.10.2" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.1" />
     <PackageReference Include="MinVer" Version="4.3.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Enterwell.Clients.Wpf.Notifications" Version="1.4.2" NoWarn="NU1701" />
@@ -100,5 +93,16 @@
   <ItemGroup>
     <ProjectReference Include="..\KuchiPaku.Core\KuchiPaku.Core.csproj" />
     <ProjectReference Include="..\libs\FluentCeVIOWrapper\FluentCeVIOWrapper.Common\FluentCeVIOWrapper.Common.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources\Res.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Update="Resources\Resources.resx">
+      <LogicalName>KuchiPaku.Resources.Resources.resources</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Resources.zh-CN.resx">
+      <LogicalName>KuchiPaku.Resources.Resources.zh-CN.resources</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

@@ -84,7 +84,7 @@
             >
             <ui:AppBarButton
               x:Name="OpenYmmp"
-              Label="{x:Static res:Resources.OpenYmmpLabel}"
+              Label="{x:Static res:Res.OpenYmmpLabel}"
               Icon="OpenFile"
               LabelPosition="Default"
               Command="{Binding OpenYmmp}"
@@ -92,7 +92,7 @@
 
             <ui:AppBarButton
               x:Name="ButtonSave"
-              Label="{x:Static res:Resources.SaveYmmpLabel}"
+              Label="{x:Static res:Res.SaveYmmpLabel}"
               Icon="Save"
               Command="{Binding SaveYmmp}"
             />
@@ -103,16 +103,16 @@
               <ui:SimpleStackPanel>
                   <ui:ToggleSwitch
                       x:Name="toggleSwitch"
-                      OffContent="{x:Static res:Resources.OverwriteLabel}"
-                      OnContent="{x:Static res:Resources.BackupSaveLabel}"
+                      OffContent="{x:Static res:Res.OverwriteLabel}"
+                      OnContent="{x:Static res:Res.BackupSaveLabel}"
                       FontSize="11"
                       Margin="5,0"
                       VerticalAlignment="Center"
                       IsOn="{Binding IsSaveBackup}" />
                   <ui:ToggleSwitch
                       x:Name="toggleOpenWithSave"
-                      OffContent="{x:Static res:Resources.OpenWithSaveLabel}"
-                      OnContent="{x:Static res:Resources.OpenWithSaveLabel}"
+                      OffContent="{x:Static res:Res.OpenWithSaveLabel}"
+                      OnContent="{x:Static res:Res.OpenWithSaveLabel}"
                       FontSize="11"
                       Margin="5,0"
                       VerticalAlignment="Center"
@@ -123,7 +123,7 @@
 
           </ui:CommandBar>
           <TextBox x:Name="targetYmmpFileName"
-              ui:ControlHelper.PlaceholderText="{x:Static res:Resources.YmmpPlaceholder}"
+              ui:ControlHelper.PlaceholderText="{x:Static res:Res.YmmpPlaceholder}"
               Text="{Binding TargetYmmpFileName}"
               Width="Auto"
 
@@ -137,7 +137,7 @@
               <GroupBox.Header>
                 <ui:SimpleStackPanel Orientation="Horizontal">
                   <ui:SymbolIcon Symbol="ContactInfo" Margin="5" />
-                  <TextBlock Text="{x:Static res:Resources.CharaLipSyncSettingsHeader}" FontSize="20" />
+                  <TextBlock Text="{x:Static res:Res.CharaLipSyncSettingsHeader}" FontSize="20" />
                 </ui:SimpleStackPanel>
               </GroupBox.Header>
 
@@ -164,7 +164,7 @@
                           VerticalContentAlignment="Stretch">
                           <StackPanel Orientation="Horizontal">
                             <ToggleButton
-                              ToolTip="{x:Static res:Resources.ExportToggleToolTip}"
+                              ToolTip="{x:Static res:Res.ExportToggleToolTip}"
                               Width="20"
                               Height="20"
                               Margin="0"
@@ -195,12 +195,12 @@
                     <ComboBox x:Name="LipSyncSetting"
                       SelectedIndex="0" Margin="5"
                       IsEnabled="False">
-                      <ComboBoxItem Content="{x:Static res:Resources.LipSyncSetting1}" />
-                      <ComboBoxItem Content="{x:Static res:Resources.LipSyncSetting2}" />
+                      <ComboBoxItem Content="{x:Static res:Res.LipSyncSetting1}" />
+                      <ComboBoxItem Content="{x:Static res:Res.LipSyncSetting2}" />
                     </ComboBox>
                     <ui:CommandBar DefaultLabelPosition="Right">
                       <ui:AppBarButton
-                        Label="{x:Static res:Resources.AddButtonLabel}"
+                        Label="{x:Static res:Res.AddButtonLabel}"
                         Icon="Add"
                         IsEnabled="False"
                       />
@@ -234,13 +234,13 @@
                 <ui:SimpleStackPanel Orientation="Horizontal"
                   IsEnabled="False"
                   >
-                  <Label Content="{x:Static res:Resources.LipSyncRuleLabel}" Margin="5" />
+                  <Label Content="{x:Static res:Res.LipSyncRuleLabel}" Margin="5" />
                   <ComboBox x:Name="LipSyncRule"
                     SelectedIndex="0"
                     Width="Auto"
                   >
-                    <ListBoxItem Content="{x:Static res:Resources.StandardRule}" ToolTip="{x:Static res:Resources.StandardRuleToolTip}" />
-                    <ListBoxItem Content="{x:Static res:Resources.LipSyncRule2}" />
+                    <ListBoxItem Content="{x:Static res:Res.StandardRule}" ToolTip="{x:Static res:Res.StandardRuleToolTip}" />
+                    <ListBoxItem Content="{x:Static res:Res.LipSyncRule2}" />
                   </ComboBox>
                 </ui:SimpleStackPanel>
 
@@ -294,7 +294,7 @@
 
                 <ui:SimpleStackPanel
                   Orientation="Horizontal">
-                  <Label Content="{x:Static res:Resources.OptionsHeader}" Margin="5" />
+                  <Label Content="{x:Static res:Res.OptionsHeader}" Margin="5" />
                   <ComboBox
                       ItemsSource="{Binding ConsonantOptionList}"
                       SelectedItem="{Binding CurrentConsonantOption}" DisplayMemberPath="Name" />
@@ -308,7 +308,7 @@
             <ui:SimpleStackPanel></ui:SimpleStackPanel>
           </GroupBox>
           -->
-          <GroupBox Header="{x:Static res:Resources.OptionsHeader}">
+          <GroupBox Header="{x:Static res:Res.OptionsHeader}">
             <ui:SimpleStackPanel>
               <ui:SimpleStackPanel
                 Orientation="Horizontal"
@@ -316,10 +316,10 @@
                 >
                 <CheckBox
                   x:Name="MyCheckBox"
-                  Content="{x:Static res:Resources.EnableVisualLeadLabel}"
+                  Content="{x:Static res:Res.EnableVisualLeadLabel}"
                   IsChecked="{Binding IsEnabledVisualLead, Mode=TwoWay}"
                   Margin="3" />
-                <ui:NumberBox Header="{x:Static res:Resources.VisualLeadHeader}"
+                <ui:NumberBox Header="{x:Static res:Res.VisualLeadHeader}"
                   Value="{Binding VisualLeadMs}"
                   Minimum="0"
                   Maximum="200"
@@ -327,26 +327,26 @@
                   />
               </ui:SimpleStackPanel>
               <Expander x:Name="otherOptions"
-                        Header="{x:Static res:Resources.OthersHeader}"
+                        Header="{x:Static res:Res.OthersHeader}"
                         ExpandDirection="Down"
                         IsExpanded="False"
                         VerticalAlignment="Top"
                         Margin="10,0,0,0">
                 <WrapPanel fw:PointerTracker.Enabled="True">
                   <Button x:Name="openLicense"
-                          Content="{x:Static res:Resources.LicenseButtonLabel}"
+                          Content="{x:Static res:Res.LicenseButtonLabel}"
                           Margin="10"
                           Padding="5"
                           Style="{StaticResource ButtonRevealStyle}"
                           Command="{Binding OpenLicenses}" />
                   <Button x:Name="openWebsite"
-                          Content="{x:Static res:Resources.KuchiPakuWebsiteLabel}"
+                          Content="{x:Static res:Res.KuchiPakuWebsiteLabel}"
                           Margin="10"
                           Padding="5"
                           Style="{StaticResource ButtonRevealStyle}"
                           Command="{Binding OpenWebsite}" />
                   <Button x:Name="openYMM4Website"
-                          Content="{x:Static res:Resources.YMM4WebsiteLabel}"
+                          Content="{x:Static res:Res.YMM4WebsiteLabel}"
                           Margin="10"
                           Padding="5"
                           Style="{StaticResource ButtonRevealStyle}"
