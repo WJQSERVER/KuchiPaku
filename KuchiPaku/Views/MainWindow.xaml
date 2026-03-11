@@ -153,38 +153,40 @@
                     SelectedItem="{Binding SelectedCharaItem, Mode=OneWay}"
                   >
 
+
                     <ListView.ItemTemplate>
                       <DataTemplate>
-                        <Grid Background="Transparent">
-                          <epoxy:EventBinder.Events>
-                            <epoxy:Event EventName="PreviewMouseLeftButtonDown" Command="{Binding DataContext.ItemClick, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" />
-                          </epoxy:EventBinder.Events>
-                          <StackPanel Orientation="Horizontal">
-                            <ToggleButton
-                              ToolTip="{x:Static res:Resources.ExportToggleToolTip}"
-                              Width="20"
-                              Height="20"
+                        <StackPanel Orientation="Horizontal" Background="Transparent">
+                          <ToggleButton
+                            ToolTip="{x:Static res:Resources.ExportToggleToolTip}"
+                            Width="20"
+                            Height="20"
+                            Margin="0"
+                            Padding="0"
+                            IsChecked="{Binding IsExport}">
+                            <TextBlock
+                              Text="✔"
                               Margin="0"
                               Padding="0"
-                              IsChecked="{Binding IsExport}">
-                              <TextBlock
-                                Text="✔"
-                                Margin="0"
-                                Padding="0"
-                                FontSize="8"
-                                Visibility="{Binding IsExport, Converter={StaticResource BoolToVisible}}"
-                                />
-                            </ToggleButton>
+                              FontSize="8"
+                              Visibility="{Binding IsExport, Converter={StaticResource BoolToVisible}}"
+                              />
+                          </ToggleButton>
+                          <Grid Background="Transparent">
+                            <epoxy:EventBinder.Events>
+                              <epoxy:Event EventName="PreviewMouseLeftButtonDown" Command="{Binding DataContext.ItemClick, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" />
+                            </epoxy:EventBinder.Events>
                             <TextBlock
                               Margin="10,5,5,5"
                               FontWeight="Bold"
                               VerticalAlignment="Center"
                               IsEnabled="{Binding IsExport}"
                               Text="{Binding Name}"/>
-                          </StackPanel>
-                        </Grid>
+                          </Grid>
+                        </StackPanel>
                       </DataTemplate>
                     </ListView.ItemTemplate>
+
 
                   </ListView>
                   <Separator />
@@ -241,6 +243,7 @@
                   </ComboBox>
                 </ui:SimpleStackPanel>
 
+
                 <ListView x:Name="LipSyncImage"
                   MinHeight="100"
                   Width="300"
@@ -253,38 +256,39 @@
 
                     <ListView.ItemTemplate>
                       <DataTemplate>
-                        <Grid Background="Transparent">
-                          <epoxy:EventBinder.Events>
-                            <epoxy:Event EventName="PreviewMouseLeftButtonDown" Command="{Binding DataContext.ItemClick, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" />
-                          </epoxy:EventBinder.Events>
-                          <StackPanel Orientation="Horizontal">
-                            <ToggleButton
-                              ToolTip="{x:Static res:Resources.ExportToggleToolTip}"
-                              Width="20"
-                              Height="20"
+                        <StackPanel Orientation="Horizontal" Background="Transparent">
+                          <ToggleButton
+                            ToolTip="{x:Static res:Resources.ExportToggleToolTip}"
+                            Width="20"
+                            Height="20"
+                            Margin="0"
+                            Padding="0"
+                            IsChecked="{Binding IsExport}">
+                            <TextBlock
+                              Text="✔"
                               Margin="0"
                               Padding="0"
-                              IsChecked="{Binding IsExport}">
-                              <TextBlock
-                                Text="✔"
-                                Margin="0"
-                                Padding="0"
-                                FontSize="8"
-                                Visibility="{Binding IsExport, Converter={StaticResource BoolToVisible}}"
-                                />
-                            </ToggleButton>
+                              FontSize="8"
+                              Visibility="{Binding IsExport, Converter={StaticResource BoolToVisible}}"
+                              />
+                          </ToggleButton>
+                          <Grid Background="Transparent">
+                            <epoxy:EventBinder.Events>
+                              <epoxy:Event EventName="PreviewMouseLeftButtonDown" Command="{Binding DataContext.ItemClick, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" />
+                            </epoxy:EventBinder.Events>
                             <TextBlock
                               Margin="10,5,5,5"
                               FontWeight="Bold"
                               VerticalAlignment="Center"
                               IsEnabled="{Binding IsExport}"
                               Text="{Binding Name}"/>
-                          </StackPanel>
-                        </Grid>
+                          </Grid>
+                        </StackPanel>
                       </DataTemplate>
                     </ListView.ItemTemplate>
 
                 </ListView>
+
 
                 <ui:SimpleStackPanel
                   Orientation="Horizontal">

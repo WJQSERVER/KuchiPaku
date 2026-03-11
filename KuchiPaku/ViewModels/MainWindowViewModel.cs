@@ -494,28 +494,20 @@ public sealed class MainWindowViewModel
 		(LipSyncImages ??= []).Clear();
 
 		var path = chara.DirectoryPath!;
-		if (string.IsNullOrEmpty(path) || !Directory.Exists(path))
-		{
-			// For PSD tachie or missing folder, we might not be able to load "口" folder.
-			// But we shouldn't show a warning if it's a known PSD case (though we don't check type here perfectly)
-			// Let's just return silently for now to avoid annoying popups for unsupported/different structures.
-			return;
-		}
+
+
 
 		var kuchiDir = await Task.Run(() => Directory.GetDirectories(path, "口").FirstOrDefault());
+		var kList = new ObservableCollection<LipSyncImageLineViewModel>();
 
-		if (kuchiDir is null)
+		if (kuchiDir != null)
 		{
-			Manager.Warn(Resources.KuchiFolderNotFoundTitle, Resources.KuchiFolderNotFoundMessage);
-			return;
+			var kuchiImages = Directory
+				.GetFiles(kuchiDir)
+				.Where(s => ExtensionTexts.Contains(Path.GetExtension(s)))
+				.Select(s => new LipSyncImageLineViewModel(Path.GetFileNameWithoutExtension(s), s));
+			kList = new ObservableCollection<LipSyncImageLineViewModel>(kuchiImages);
 		}
-
-		var kuchiImages = Directory
-			.GetFiles(kuchiDir)
-			.Where(s => ExtensionTexts.Contains(Path.GetExtension(s)))
-			.Select(s => new LipSyncImageLineViewModel(Path.GetFileNameWithoutExtension(s), s));
-
-		var kList = new ObservableCollection<LipSyncImageLineViewModel>(kuchiImages);
 
 		var images = LipSyncSettings[chara!.Name!]
 			.MousePhonemeImagePair.Select(v =>
@@ -530,11 +522,16 @@ public sealed class MainWindowViewModel
 					"N" => Resources.NLine,
 					_ => "ERROR",
 				};
-				var p = Path.Combine(kuchiDir, Path.GetFileName(v.Value));
-				var kuchi =
-					kList.FirstOrDefault(k => k.Path == p)
-					?? kList.FirstOrDefault(k => k.Path == chara.DefaultMouthImgPath);
-				var index = (kuchi is null) ? 0 : kList.IndexOf(kuchi);
+
+				int index = 0;
+				if (kuchiDir != null)
+				{
+					var p = Path.Combine(kuchiDir, Path.GetFileName(v.Value));
+					var kuchi = kList.FirstOrDefault(k => k.Path == p)
+								?? kList.FirstOrDefault(k => k.Path == chara.DefaultMouthImgPath);
+					index = (kuchi is null) ? 0 : kList.IndexOf(kuchi);
+				}
+
 				return new LipSyncImageViewModel(
 					v.Key,
 					lineName,
@@ -547,6 +544,7 @@ public sealed class MainWindowViewModel
 			})
 			.ToList();
 		LipSyncImages = [.. images];
+
 
 		// Sync ConsonantOption UI
 		var currentCharaOption = LipSyncSettings[chara.Name!].ConsonantOption;
