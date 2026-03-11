@@ -9,12 +9,12 @@ public class ProjectConfig
 
     public static string Serialize(ProjectConfig config)
     {
-        return Toml.FromModel(config);
+        return Tomlyn.Toml.FromModel(config);
     }
 
     public static ProjectConfig Deserialize(string toml)
     {
-        return Toml.ToModel<ProjectConfig>(toml);
+        return Tomlyn.Toml.ToModel<ProjectConfig>(toml);
     }
 }
 

@@ -49,6 +49,7 @@ public sealed class MainWindowViewModel
 	public ObservableCollection<CharacterListViewModel>? Characters { get; set; }
 
 	public CharacterListViewModel? SelectedCharaItem { get; set; }
+	public Command? ItemClick { get; set; }
 
 	public ObservableCollection<LipSyncImageViewModel>? LipSyncImages { get; set; }
 
@@ -123,8 +124,8 @@ public sealed class MainWindowViewModel
 			var ymmChara = await YmmpUtil.ParseCharactersAsync(CurrentYmmp);
 			var viewList = ymmChara
 				.Where(v => v.TachieCharacterParameter is not null)
-				//TODO:support psd tachie
-				.Where(v => v.TachieType is not YmmpTachieType.PsdTachie)
+				// Enabled PSD tachie support
+				// .Where(v => v.TachieType is not YmmpTachieType.PsdTachie)
 				.Select(v => new CharacterListViewModel
 				{
 					Name = v.Name,
@@ -324,6 +325,22 @@ public sealed class MainWindowViewModel
 		OpenYMM4Website = Command.Factory.Create<RoutedEventArgs>(async _ =>
 			await OpenAsync("https://manjubox.net/ymm4/")
 		);
+
+		ItemClick = Command.Factory.Create<CharacterListViewModel>(item =>
+		{
+			if (SelectedCharaItem == item)
+			{
+				SaveProjectConfig();
+				SelectedCharaItem = null;
+				LipSyncImages?.Clear();
+			}
+			else
+			{
+				SelectedCharaItem = item;
+			}
+			return default;
+		});
+
 	}
 
 	/// <summary>
@@ -477,9 +494,11 @@ public sealed class MainWindowViewModel
 		(LipSyncImages ??= []).Clear();
 
 		var path = chara.DirectoryPath!;
-		if (path is null || !Directory.Exists(path))
+		if (string.IsNullOrEmpty(path) || !Directory.Exists(path))
 		{
-			Manager.Warn(Resources.FolderNotFoundTitle, Resources.FolderNotFoundMessage);
+			// For PSD tachie or missing folder, we might not be able to load "口" folder.
+			// But we shouldn't show a warning if it's a known PSD case (though we don't check type here perfectly)
+			// Let's just return silently for now to avoid annoying popups for unsupported/different structures.
 			return;
 		}
 

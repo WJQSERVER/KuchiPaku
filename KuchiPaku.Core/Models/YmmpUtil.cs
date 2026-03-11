@@ -154,9 +154,8 @@ public static partial class YmmpUtil
 			.Where(v =>
 				!v.Item.IsCustomVoice
 				&& v.Item.VoiceParameter is not null
-				//TODO: support psd tachie
-				&& v.Item.TachieFaceParameter?.Type
-					!= "YukkuriMovieMaker.Plugin.Tachie.Psd.PsdTachieFaceParameter, YukkuriMovieMaker.Plugin.Tachie.Psd"
+				// Enabled PSD tachie support
+				// && v.Item.TachieFaceParameter?.Type != "YukkuriMovieMaker.Plugin.Tachie.Psd.PsdTachieFaceParameter, YukkuriMovieMaker.Plugin.Tachie.Psd"
 			)
 		);
 	}
