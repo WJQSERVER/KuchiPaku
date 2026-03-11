@@ -23,7 +23,7 @@
     <Version>0.1.0.0</Version>
     <!-- AssemblyInfo プロパティ -->
     <AssemblyTitle>KuchiPaku</AssemblyTitle>
-    <SupportedCultures>en-US;ja</SupportedCultures>
+    <SupportedCultures>en-US;ja;zh-CN</SupportedCultures>
     <!-- MinVer -->
     <MinVerTagPrefix>v</MinVerTagPrefix>
     <MinVerMinimumMajorMinor>0.1</MinVerMinimumMajorMinor>
@@ -57,7 +57,7 @@
     <Message Text="Actions After Publish" Importance="high" />
   </Target>
   <ItemGroup>
-    <FluentValidationExcludedCultures Include="ar;el;he;hi;no;ro;sk;be;cs;cs-CZ;da;de;es;fa;fi;fr;it;ko;mk;nl;pl;pt;ru;sv;tr;uk;zh-CN;zh-CHS;zh-CHT;zh;zh-Hans;zh-Hant;af-ZA;am-ET;ar-SA;az-Latn-AZ;be-BY;bg-BG;bn-BD;bs-Latn-BA;ca-ES;da-DK;de-DE;el-GR;en-GB;es-ES;es-MX;et-EE;eu-ES;fa-IR;fi-FI;fr-CA;fr-FR;gl-ES;ha-Latn-NG;he-IL;hi-IN;hr-HR;hu-HU;id-ID;is-IS;it-IT;ka-GE;kk-KZ;km-KH;kn-IN;ko-KR;lo-LA;lt-LT;lv-LV;mk-MK;ml-IN;ms-MY;nb-NO;nl-NL;nn-NO;pl-PL;pt-BR;pt-PT;ro-RO;ru-RU;sk-SK;sl-SI;sq-AL;sr-Latn-RS;sv-SE;sw-KE;ta-IN;te-IN;th-TH;tr-TR;uk-UA;uz-Latn-UZ;vi-VN;zh-TW;">
+    <FluentValidationExcludedCultures Include="ar;el;he;hi;no;ro;sk;be;cs;cs-CZ;da;de;es;fa;fi;fr;it;ko;mk;nl;pl;pt;ru;sv;tr;uk;af-ZA;am-ET;ar-SA;az-Latn-AZ;be-BY;bg-BG;bn-BD;bs-Latn-BA;ca-ES;da-DK;de-DE;el-GR;en-GB;es-ES;es-MX;et-EE;eu-ES;fa-IR;fi-FI;fr-CA;fr-FR;gl-ES;ha-Latn-NG;he-IL;hi-IN;hr-HR;hu-HU;id-ID;is-IS;it-IT;ka-GE;kk-KZ;km-KH;kn-IN;ko-KR;lo-LA;lt-LT;lv-LV;mk-MK;ml-IN;ms-MY;nb-NO;nl-NL;nn-NO;pl-PL;pt-BR;pt-PT;ro-RO;ru-RU;sk-SK;sl-SI;sq-AL;sr-Latn-RS;sv-SE;sw-KE;ta-IN;te-IN;th-TH;tr-TR;uk-UA;uz-Latn-UZ;vi-VN;">
       <InProject>false</InProject>
     </FluentValidationExcludedCultures>
     <!-- アプリに付与するファイル -->
@@ -84,7 +84,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
-    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.0" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.3" />
     <PackageReference Include="Epoxy.Wpf" Version="1.16.0" />
     <PackageReference Include="ModernWpfUI" Version="0.9.6" />
     <PackageReference Include="FluentWPF" Version="0.10.2" />
@@ -100,5 +100,6 @@
   <ItemGroup>
     <ProjectReference Include="..\KuchiPaku.Core\KuchiPaku.Core.csproj" />
     <ProjectReference Include="..\libs\FluentCeVIOWrapper\FluentCeVIOWrapper.Common\FluentCeVIOWrapper.Common.csproj" />
+    <PackageReference Include="Tomlyn" Version="1.1.1" />
   </ItemGroup>
 </Project>

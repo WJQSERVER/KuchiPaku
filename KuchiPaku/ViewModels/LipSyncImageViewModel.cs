@@ -20,7 +20,7 @@ public class LipSyncImageViewModel
 
 	public string CharacterName { get; set; }
 	public string CharacterDir { get; set; }
-	public LipSyncImageLineViewModel? SelectedLipSyncItem { get; set; }
+
 	public MainWindowViewModel MainWindowVM { get; set; }
 
 	public int SelectedItemIndex { get; set; }
@@ -62,9 +62,7 @@ public class LipSyncImageViewModel
 		Debug.WriteLine($"RipSyncSettings[{CharacterName}]:[{Id}]:{Path.GetFileName(selected.Path)!}");
 	}
 
-	[PropertyChanged(nameof(SelectedLipSyncItem))]
-	private async ValueTask SelectedLipSyncItemChangedAsync(LipSyncImageLineViewModel item){
-		Debug.WriteLine($"SelectedLipSyncItem: {Name} {item.ImageName}");
+	 {item.ImageName}");
 
 		if(MainWindowVM?.LipSyncSettings is null)return;
 
