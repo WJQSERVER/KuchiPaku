@@ -28,7 +28,7 @@
     <value>角色口型同步设置</value>
   </data>
   <data name="ExportToggleToolTip" xml:space="preserve">
-    <value>点击此按钮的角色将不会被导出。</value>
+    <value>未勾选的角色将不会生成口型同步数据。</value>
   </data>
   <data name="LipSyncSetting1" xml:space="preserve">
     <value>口型设置 1</value>
@@ -43,10 +43,10 @@
     <value>口型同步规则</value>
   </data>
   <data name="StandardRule" xml:space="preserve">
-    <value>标准（兼容 PSDToolKit）</value>
+    <value>标准 (兼容 PSDToolKit)</value>
   </data>
   <data name="StandardRuleToolTip" xml:space="preserve">
-    <value>兼容 PSDToolKit</value>
+    <value>兼容 PSDToolKit 规范</value>
   </data>
   <data name="LipSyncRule2" xml:space="preserve">
     <value>口型同步 2</value>
@@ -55,106 +55,106 @@
     <value>选项</value>
   </data>
   <data name="EnableVisualLeadLabel" xml:space="preserve">
-    <value>口型先行</value>
+    <value>启用口型提前</value>
   </data>
   <data name="VisualLeadHeader" xml:space="preserve">
-    <value>画面先行 毫秒 (66～100):</value>
+    <value>画面提前 毫秒 (0～200):</value>
   </data>
   <data name="OthersHeader" xml:space="preserve">
     <value>其他</value>
   </data>
   <data name="LicenseButtonLabel" xml:space="preserve">
-    <value>许可</value>
+    <value>许可协议</value>
   </data>
   <data name="KuchiPakuWebsiteLabel" xml:space="preserve">
-    <value>KuchiPaku 官方网站</value>
+    <value>KuchiPaku 官网</value>
   </data>
   <data name="YMM4WebsiteLabel" xml:space="preserve">
-    <value>YMM4 官方网站</value>
+    <value>YMM4 官网</value>
   </data>
   <data name="OpenYmmpDialogTitle" xml:space="preserve">
-    <value>请选择要进行口型同步的 YMM4 项目文件。</value>
+    <value>请选择要处理的 YMM4 项目文件 (.ymmp)</value>
   </data>
   <data name="YmmpFileFilter" xml:space="preserve">
     <value>YMM4 项目文件</value>
   </data>
   <data name="YmmpNotLoadedTitle" xml:space="preserve">
-    <value>未加载 YMM4 项目</value>
+    <value>未加载项目</value>
   </data>
   <data name="YmmpNotLoadedMessage" xml:space="preserve">
-    <value>请先读取 YMM4 项目文件 (.ymmp)。</value>
+    <value>请先打开一个 YMM4 项目文件 (.ymmp)。</value>
   </data>
   <data name="SavingTitle" xml:space="preserve">
-    <value>保存中</value>
+    <value>正在保存</value>
   </data>
   <data name="SavingMessage" xml:space="preserve">
-    <value>正在保存…</value>
+    <value>正在处理并保存文件...</value>
   </data>
   <data name="AnalyzingVoiceItemsMessage" xml:space="preserve">
-    <value>正在解析语音项目…</value>
+    <value>正在解析语音项目...</value>
   </data>
   <data name="NoVoiceItemsTitle" xml:space="preserve">
-    <value>无语音项目</value>
+    <value>未发现语音项目</value>
   </data>
   <data name="NoVoiceItemsMessage" xml:space="preserve">
-    <value>未找到目标语音项目。</value>
+    <value>项目中未找到可处理的语音素材。</value>
   </data>
   <data name="FilteringExportItemsMessage" xml:space="preserve">
-    <value>正在过滤导出目标…</value>
+    <value>正在筛选导出对象...</value>
   </data>
   <data name="GeneratingCustomVoiceLipSyncMessage" xml:space="preserve">
-    <value>正在生成自定义语音口型同步…</value>
+    <value>正在为自定义语音生成口型同步...</value>
   </data>
   <data name="GeneratingApiVoiceLipSyncMessage" xml:space="preserve">
-    <value>正在生成 API 语音口型同步…</value>
+    <value>正在通过 API 生成口型同步...</value>
   </data>
   <data name="SavingFileMessage" xml:space="preserve">
-    <value>正在保存文件…</value>
+    <value>正在写入文件...</value>
   </data>
   <data name="SaveYmmpDialogTitle" xml:space="preserve">
-    <value>选择要保存的 YMM4 项目文件</value>
+    <value>选择保存位置</value>
   </data>
   <data name="SaveSuccessTitle" xml:space="preserve">
     <value>保存成功</value>
   </data>
   <data name="SaveSuccessMessage" xml:space="preserve">
-    <value>已保存</value>
+    <value>项目文件已成功保存。</value>
   </data>
   <data name="FolderNotFoundTitle" xml:space="preserve">
-    <value>找不到文件夹</value>
+    <value>找不到资源文件夹</value>
   </data>
   <data name="FolderNotFoundMessage" xml:space="preserve">
-    <value>找不到指定的角色立绘文件夹。您是否移动了整个文件夹？</value>
+    <value>找不到指定的角色立绘文件夹，请确认路径是否正确。</value>
   </data>
   <data name="KuchiFolderNotFoundTitle" xml:space="preserve">
     <value>找不到「口」文件夹</value>
   </data>
   <data name="KuchiFolderNotFoundMessage" xml:space="preserve">
-    <value>为了进行口型同步，需要在「口」文件夹中放置图片。</value>
+    <value>口型同步需要立绘目录下存在存放口型图片的「口」文件夹。</value>
   </data>
   <data name="ALine" xml:space="preserve">
-    <value>啊行</value>
+    <value>A 音 (あ)</value>
   </data>
   <data name="ILine" xml:space="preserve">
-    <value>衣行</value>
+    <value>I 音 (い)</value>
   </data>
   <data name="ULine" xml:space="preserve">
-    <value>乌行</value>
+    <value>U 音 (う)</value>
   </data>
   <data name="ELine" xml:space="preserve">
-    <value>诶行</value>
+    <value>E 音 (え)</value>
   </data>
   <data name="OLine" xml:space="preserve">
-    <value>欧行</value>
+    <value>O 音 (お)</value>
   </data>
   <data name="NLine" xml:space="preserve">
-    <value>嗯</value>
+    <value>N 音 (ん)</value>
   </data>
   <data name="ConsonantOption_ALL_N" xml:space="preserve">
-    <value>全部设为“嗯”</value>
+    <value>全部处理为“N音 (ん)”</value>
   </data>
   <data name="ConsonantOption_CONTINUE_BEFORE_VOWEL" xml:space="preserve">
-    <value>延续上一个元音</value>
+    <value>延续前一个元音</value>
   </data>
   <data name="ConsonantOption_SMALL_MOUSE" xml:space="preserve">
     <value>缩小口型</value>

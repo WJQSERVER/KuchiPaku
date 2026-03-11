@@ -289,7 +289,7 @@
           </ui:SimpleStackPanel>
 
           <!--
-          <GroupBox Header="挿入レイヤー設定">
+          <GroupBox Header="挿入レイヤー設定" Visibility="Collapsed">
             <ui:SimpleStackPanel></ui:SimpleStackPanel>
           </GroupBox>
           -->
