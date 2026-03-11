@@ -154,38 +154,40 @@
 
                     <ListView.ItemTemplate>
                       <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Background="Transparent">
-                          <ToggleButton
-                            ToolTip="{x:Static res:Resources.ExportToggleToolTip}"
-                            Width="20"
-                            Height="20"
-                            Margin="0"
-                            Padding="0"
-                            IsChecked="{Binding IsExport}">
-                            <TextBlock
-                              Text="✔"
+                        <Button
+                          Command="{Binding DataContext.ItemClick, RelativeSource={RelativeSource AncestorType=Window}}"
+                          CommandParameter="{Binding}"
+                          Background="Transparent"
+                          BorderThickness="0"
+                          Padding="0"
+                          HorizontalContentAlignment="Stretch"
+                          VerticalContentAlignment="Stretch">
+                          <StackPanel Orientation="Horizontal">
+                            <ToggleButton
+                              ToolTip="{x:Static res:Resources.ExportToggleToolTip}"
+                              Width="20"
+                              Height="20"
                               Margin="0"
                               Padding="0"
-                              FontSize="8"
-                              Visibility="{Binding IsExport, Converter={StaticResource BoolToVisible}}"
-                              />
-                          </ToggleButton>
-                          <Grid Background="Transparent">
-                            <epoxy:EventBinder.Events>
-                              <epoxy:Event EventName="PreviewMouseLeftButtonDown" Command="{Binding DataContext.ItemClick, RelativeSource={RelativeSource AncestorType=Window}}" BindValue="{Binding}" />
-                            </epoxy:EventBinder.Events>
+                              IsChecked="{Binding IsExport}">
+                              <TextBlock
+                                Text="✔"
+                                Margin="0"
+                                Padding="0"
+                                FontSize="8"
+                                Visibility="{Binding IsExport, Converter={StaticResource BoolToVisible}}"
+                                />
+                            </ToggleButton>
                             <TextBlock
                               Margin="10,5,5,5"
                               FontWeight="Bold"
                               VerticalAlignment="Center"
                               IsEnabled="{Binding IsExport}"
                               Text="{Binding Name}"/>
-                          </Grid>
-                        </StackPanel>
+                          </StackPanel>
+                        </Button>
                       </DataTemplate>
                     </ListView.ItemTemplate>
-
-
 
                   </ListView>
                   <Separator />
@@ -286,7 +288,6 @@
                       </StackPanel>
                     </DataTemplate>
                   </ListView.ItemTemplate>
-
 
                 </ListView>
 
