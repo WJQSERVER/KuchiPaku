@@ -9,6 +9,7 @@ using System.Windows;
 using Enterwell.Clients.Wpf.Notifications;
 using Epoxy;
 using KuchiPaku.Models;
+using KuchiPaku.ModelsData;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json.Linq;
 using NLog;
@@ -153,7 +154,7 @@ public sealed class MainWindowViewModel
 			Characters = [.. viewList];
 
 			// Load TOML config if exists
-			var configPath = cofd.FileName + ".toml";
+			var configPath = cofd.FileName + ".config.json";
 			if (File.Exists(configPath))
 			{
 				try
@@ -435,7 +436,7 @@ public sealed class MainWindowViewModel
 	{
 		if (string.IsNullOrEmpty(CurrentYmmpPath) || Characters == null) return;
 
-		var configPath = CurrentYmmpPath + ".toml";
+		var configPath = CurrentYmmpPath + ".config.json";
 		var config = new ProjectConfig();
 
 		foreach (var chara in Characters)

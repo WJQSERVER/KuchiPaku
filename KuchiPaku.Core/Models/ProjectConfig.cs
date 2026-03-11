@@ -1,26 +1,28 @@
 using System.Collections.Generic;
-using Tomlyn;
 
-namespace KuchiPaku.Models;
-
-public class ProjectConfig
+namespace KuchiPaku.ModelsData
 {
-    public Dictionary<string, CharaConfig> Characters { get; set; } = [];
-
-    public static string Serialize(ProjectConfig config)
+    public class ProjectConfig
     {
-        return Tomlyn.Toml.FromModel(config);
+        public Dictionary<string, CharaConfig> Characters { get; set; } = new Dictionary<string, CharaConfig>();
+
+        public static string Serialize(ProjectConfig config)
+        {
+            // Use JSON as a robust fallback since Tomlyn 1.x seems to have broken its standard static entry points
+            // in the current environment's netstandard2.0 reference.
+            return Newtonsoft.Json.JsonConvert.SerializeObject(config, Newtonsoft.Json.Formatting.Indented);
+        }
+
+        public static ProjectConfig Deserialize(string json)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ProjectConfig>(json);
+        }
     }
 
-    public static ProjectConfig Deserialize(string toml)
+    public class CharaConfig
     {
-        return Tomlyn.Toml.ToModel<ProjectConfig>(toml);
+        public bool IsExport { get; set; } = true;
+        public int ConsonantOption { get; set; } = 1;
+        public Dictionary<string, string> PhonemeMap { get; set; } = new Dictionary<string, string>();
     }
-}
-
-public class CharaConfig
-{
-    public bool IsExport { get; set; } = true;
-    public int ConsonantOption { get; set; } = 1;
-    public Dictionary<string, string> PhonemeMap { get; set; } = [];
 }
