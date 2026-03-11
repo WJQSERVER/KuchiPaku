@@ -147,8 +147,41 @@ public sealed class MainWindowViewModel
 					);
 				});
 
+
 			Characters.Clear();
 			Characters = [.. viewList];
+
+			// Load TOML config if exists
+			var configPath = cofd.FileName + ".toml";
+			if (File.Exists(configPath))
+			{
+				try
+				{
+					var toml = File.ReadAllText(configPath);
+					var config = ProjectConfig.Deserialize(toml);
+					foreach (var chara in Characters)
+					{
+						if (string.IsNullOrEmpty(chara.Name)) continue;
+						if (config.Characters.TryGetValue(chara.Name, out var charaConfig))
+						{
+							chara.IsExport = charaConfig.IsExport;
+							if (LipSyncSettings.TryGetValue(chara.Name, out var option))
+							{
+								option.ConsonantOption = (ConsonantOption)charaConfig.ConsonantOption;
+								foreach (var pMap in charaConfig.PhonemeMap)
+								{
+									option.MousePhonemeImagePair[pMap.Key] = pMap.Value;
+								}
+							}
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					logger.Error(e, "Failed to load TOML config");
+				}
+			}
+
 		});
 
 		SaveYmmp = Command.Factory.Create(
@@ -261,6 +294,7 @@ public sealed class MainWindowViewModel
 
 					sw.Restart();
 					await YmmpUtil.SaveAsync(ymmp, csfd.FileName);
+					SaveProjectConfig();
 
 					Manager.Dismiss(loading);
 					Manager.Info(Resources.SaveSuccessTitle, Resources.SaveSuccessMessage, true);
@@ -379,6 +413,41 @@ public sealed class MainWindowViewModel
 		return true;
 	}
 
+
+	private void SaveProjectConfig()
+	{
+		if (string.IsNullOrEmpty(CurrentYmmpPath) || Characters == null) return;
+
+		var configPath = CurrentYmmpPath + ".toml";
+		var config = new ProjectConfig();
+
+		foreach (var chara in Characters)
+		{
+			if (string.IsNullOrEmpty(chara.Name)) continue;
+
+			var charaConfig = new CharaConfig { IsExport = chara.IsExport };
+			if (LipSyncSettings.TryGetValue(chara.Name, out var option))
+			{
+				charaConfig.ConsonantOption = (int)option.ConsonantOption;
+				foreach (var pair in option.MousePhonemeImagePair)
+				{
+					charaConfig.PhonemeMap[pair.Key] = Path.GetFileName(pair.Value);
+				}
+			}
+			config.Characters[chara.Name] = charaConfig;
+		}
+
+		try
+		{
+			var toml = ProjectConfig.Serialize(config);
+			File.WriteAllText(configPath, toml);
+		}
+		catch (Exception e)
+		{
+			logger.Error(e, "Failed to save TOML config");
+		}
+	}
+
 	private static async ValueTask OpenAsync(string path)
 	{
 		await Task.Run(() =>
@@ -388,6 +457,7 @@ public sealed class MainWindowViewModel
 		});
 	}
 
+
 	[PropertyChanged(nameof(SelectedCharaItem))]
 	private async ValueTask SelectedCharaItemChangedAsync(CharacterListViewModel item)
 	{
@@ -396,23 +466,19 @@ public sealed class MainWindowViewModel
 			return;
 		}
 
+		SaveProjectConfig();
+
 		var sw = new System.Diagnostics.Stopwatch();
 		sw.Start();
 
 		var chara = item;
 		Debug.WriteLine($"SelectedChara: {chara.Name}, isExport: {chara.IsExport}");
 
-		//TODO:設定リストから読み出す
-		//クチパク設定Viewに設定
-
 		(LipSyncImages ??= []).Clear();
-
-		//TODO:将来的にルール設定から追加するようにする
 
 		var path = chara.DirectoryPath!;
 		if (path is null || !Directory.Exists(path))
 		{
-			//パスが無いのをユーザー通知
 			Manager.Warn(Resources.FolderNotFoundTitle, Resources.FolderNotFoundMessage);
 			return;
 		}
@@ -425,28 +491,12 @@ public sealed class MainWindowViewModel
 			return;
 		}
 
-		/*
-		var files = Directory
-			.GetFiles(kuchiDir)
-			.Select(s => Path.GetExtension(s));
-		*/
-		sw.Stop();
-		Debug.WriteLine($"TIME[get dir kuchi]:{sw.ElapsedMilliseconds}");
-		sw.Restart();
-
 		var kuchiImages = Directory
 			.GetFiles(kuchiDir)
 			.Where(s => ExtensionTexts.Contains(Path.GetExtension(s)))
 			.Select(s => new LipSyncImageLineViewModel(Path.GetFileNameWithoutExtension(s), s));
 
 		var kList = new ObservableCollection<LipSyncImageLineViewModel>(kuchiImages);
-
-		sw.Stop();
-		Debug.WriteLine($"TIME[kuchi images]:{sw.ElapsedMilliseconds}");
-		sw.Restart();
-
-		//Debug.WriteLine($"kuchiImages:{kuchiImages}");
-		//kList.Where(k => k.Path == )
 
 		var images = LipSyncSettings[chara!.Name!]
 			.MousePhonemeImagePair.Select(v =>
@@ -463,7 +513,7 @@ public sealed class MainWindowViewModel
 				};
 				var p = Path.Combine(kuchiDir, Path.GetFileName(v.Value));
 				var kuchi =
-					kList.First(k => k.Path == p)
+					kList.FirstOrDefault(k => k.Path == p)
 					?? kList.FirstOrDefault(k => k.Path == chara.DefaultMouthImgPath);
 				var index = (kuchi is null) ? 0 : kList.IndexOf(kuchi);
 				return new LipSyncImageViewModel(
@@ -479,16 +529,22 @@ public sealed class MainWindowViewModel
 			.ToList();
 		LipSyncImages = [.. images];
 
+		// Sync ConsonantOption UI
+		var currentCharaOption = LipSyncSettings[chara.Name!].ConsonantOption;
+		CurrentConsonantOption = ConsonantOptionList.FirstOrDefault(o => o.Option == currentCharaOption)
+			?? ConsonantOptionList.First();
+
 		sw.Stop();
 		Debug.WriteLine($"TIME[rip sync images]:{sw.ElapsedMilliseconds}");
 	}
+
 
 	[PropertyChanged(nameof(CurrentConsonantOption))]
 	private async ValueTask CurrentConsonantOptionChangedAsync(LocalizedConsonantOption opt)
 	{
 		await Application.Current.Dispatcher.InvokeAsync(() =>
 		{
-			LipSyncSettings.AsParallel().ForAll(s => s.Value.ConsonantOption = opt.Option);
+			if (SelectedCharaItem != null && !string.IsNullOrEmpty(SelectedCharaItem.Name)) { LipSyncSettings[SelectedCharaItem.Name].ConsonantOption = opt.Option; }
 		});
 	}
 }
