@@ -19,6 +19,7 @@
   xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
   xmlns:controls="clr-namespace:Enterwell.Clients.Wpf.Notifications.Controls;assembly=Enterwell.Clients.Wpf.Notifications"
   xmlns:viewmodels="clr-namespace:KuchiPaku.ViewModels"
+  xmlns:res="clr-namespace:KuchiPaku.Resources"
   mc:Ignorable="d"
   ui:WindowHelper.UseModernWindowStyle="True"
   Height="500" Width="800"
@@ -83,7 +84,7 @@
             >
             <ui:AppBarButton
               x:Name="OpenYmmp"
-              Label="Open ymmp"
+              Label="{x:Static res:Resources.OpenYmmpLabel}"
               Icon="OpenFile"
               LabelPosition="Default"
               Command="{Binding OpenYmmp}"
@@ -91,7 +92,7 @@
 
             <ui:AppBarButton
               x:Name="ButtonSave"
-              Label="Save ymmp"
+              Label="{x:Static res:Resources.SaveYmmpLabel}"
               Icon="Save"
               Command="{Binding SaveYmmp}"
             />
@@ -102,16 +103,16 @@
               <ui:SimpleStackPanel>
                   <ui:ToggleSwitch
                       x:Name="toggleSwitch"
-                      OffContent="上書きする"
-                      OnContent="バックアップ保存"
+                      OffContent="{x:Static res:Resources.OverwriteLabel}"
+                      OnContent="{x:Static res:Resources.BackupSaveLabel}"
                       FontSize="11"
                       Margin="5,0"
                       VerticalAlignment="Center"
                       IsOn="{Binding IsSaveBackup}" />
                   <ui:ToggleSwitch
                       x:Name="toggleOpenWithSave"
-                      OffContent="保存後YMM4で開く"
-                      OnContent="保存後YMM4で開く"
+                      OffContent="{x:Static res:Resources.OpenWithSaveLabel}"
+                      OnContent="{x:Static res:Resources.OpenWithSaveLabel}"
                       FontSize="11"
                       Margin="5,0"
                       VerticalAlignment="Center"
@@ -122,7 +123,7 @@
 
           </ui:CommandBar>
           <TextBox x:Name="targetYmmpFileName"
-              ui:ControlHelper.PlaceholderText=".ymmpファイルを選択してください"
+              ui:ControlHelper.PlaceholderText="{x:Static res:Resources.YmmpPlaceholder}"
               Text="{Binding TargetYmmpFileName}"
               Width="Auto"
 
@@ -136,7 +137,7 @@
               <GroupBox.Header>
                 <ui:SimpleStackPanel Orientation="Horizontal">
                   <ui:SymbolIcon Symbol="ContactInfo" Margin="5" />
-                  <TextBlock Text="キャラ口パク設定" FontSize="20" />
+                  <TextBlock Text="{x:Static res:Resources.CharaLipSyncSettingsHeader}" FontSize="20" />
                 </ui:SimpleStackPanel>
               </GroupBox.Header>
 
@@ -154,7 +155,7 @@
                       <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                           <ToggleButton
-                            ToolTip="ボタンを押したキャラは出力されなくなります。"
+                            ToolTip="{x:Static res:Resources.ExportToggleToolTip}"
                             Width="20"
                             Height="20"
                             Margin="0"
@@ -182,12 +183,12 @@
                     <ComboBox x:Name="LipSyncSetting"
                       SelectedIndex="0" Margin="5"
                       IsEnabled="False">
-                      <ComboBoxItem Content="口パク設定1" />
-                      <ComboBoxItem Content="口パク設定2" />
+                      <ComboBoxItem Content="{x:Static res:Resources.LipSyncSetting1}" />
+                      <ComboBoxItem Content="{x:Static res:Resources.LipSyncSetting2}" />
                     </ComboBox>
                     <ui:CommandBar DefaultLabelPosition="Right">
                       <ui:AppBarButton
-                        Label="Add"
+                        Label="{x:Static res:Resources.AddButtonLabel}"
                         Icon="Add"
                         IsEnabled="False"
                       />
@@ -221,13 +222,13 @@
                 <ui:SimpleStackPanel Orientation="Horizontal"
                   IsEnabled="False"
                   >
-                  <Label Content="口パクルール" Margin="5" />
+                  <Label Content="{x:Static res:Resources.LipSyncRuleLabel}" Margin="5" />
                   <ComboBox x:Name="LipSyncRule"
                     SelectedIndex="0"
                     Width="Auto"
                   >
-                    <ListBoxItem Content="標準（PSDToolKit互換）" ToolTip="PSDToolKit互換" />
-                    <ListBoxItem Content="あいうえお口パク2" />
+                    <ListBoxItem Content="{x:Static res:Resources.StandardRule}" ToolTip="{x:Static res:Resources.StandardRuleToolTip}" />
+                    <ListBoxItem Content="{x:Static res:Resources.LipSyncRule2}" />
                   </ComboBox>
                 </ui:SimpleStackPanel>
 
@@ -278,10 +279,10 @@
 
                 <ui:SimpleStackPanel
                   Orientation="Horizontal">
-                  <Label Content="オプション" Margin="5" />
+                  <Label Content="{x:Static res:Resources.OptionsHeader}" Margin="5" />
                   <ComboBox
                       ItemsSource="{Binding ConsonantOptionList}"
-                      SelectedItem="{Binding CurrentConsonantOption}" />
+                      SelectedItem="{Binding CurrentConsonantOption}" DisplayMemberPath="Name" />
                 </ui:SimpleStackPanel>
               </ui:SimpleStackPanel>
             </GroupBox>
@@ -292,7 +293,7 @@
             <ui:SimpleStackPanel></ui:SimpleStackPanel>
           </GroupBox>
           -->
-          <GroupBox Header="オプション">
+          <GroupBox Header="{x:Static res:Resources.OptionsHeader}">
             <ui:SimpleStackPanel>
               <ui:SimpleStackPanel
                 Orientation="Horizontal"
@@ -300,10 +301,10 @@
                 >
                 <CheckBox
                   x:Name="MyCheckBox"
-                  Content="口パク先行させる"
+                  Content="{x:Static res:Resources.EnableVisualLeadLabel}"
                   IsChecked="{Binding IsEnabledVisualLead, Mode=TwoWay}"
                   Margin="3" />
-                <ui:NumberBox Header="映像先行 msec (66～100):"
+                <ui:NumberBox Header="{x:Static res:Resources.VisualLeadHeader}"
                   Value="{Binding VisualLeadMs}"
                   Minimum="0"
                   Maximum="200"
@@ -311,26 +312,26 @@
                   />
               </ui:SimpleStackPanel>
               <Expander x:Name="otherOptions"
-                        Header="そのほか"
+                        Header="{x:Static res:Resources.OthersHeader}"
                         ExpandDirection="Down"
                         IsExpanded="False"
                         VerticalAlignment="Top"
                         Margin="10,0,0,0">
                 <WrapPanel fw:PointerTracker.Enabled="True">
                   <Button x:Name="openLicense"
-                          Content="ライセンス"
+                          Content="{x:Static res:Resources.LicenseButtonLabel}"
                           Margin="10"
                           Padding="5"
                           Style="{StaticResource ButtonRevealStyle}"
                           Command="{Binding OpenLicenses}" />
                   <Button x:Name="openWebsite"
-                          Content="KuchiPaku公式サイト"
+                          Content="{x:Static res:Resources.KuchiPakuWebsiteLabel}"
                           Margin="10"
                           Padding="5"
                           Style="{StaticResource ButtonRevealStyle}"
                           Command="{Binding OpenWebsite}" />
                   <Button x:Name="openYMM4Website"
-                          Content="YMM4公式サイト"
+                          Content="{x:Static res:Resources.YMM4WebsiteLabel}"
                           Margin="10"
                           Padding="5"
                           Style="{StaticResource ButtonRevealStyle}"

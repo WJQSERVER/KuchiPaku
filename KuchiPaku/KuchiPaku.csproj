@@ -23,7 +23,7 @@
     <Version>0.1.0.0</Version>
     <!-- AssemblyInfo プロパティ -->
     <AssemblyTitle>KuchiPaku</AssemblyTitle>
-    <SupportedCultures>en-US;ja</SupportedCultures>
+    <SupportedCultures>en-US;ja;zh-CN</SupportedCultures>
     <!-- MinVer -->
     <MinVerTagPrefix>v</MinVerTagPrefix>
     <MinVerMinimumMajorMinor>0.1</MinVerMinimumMajorMinor>

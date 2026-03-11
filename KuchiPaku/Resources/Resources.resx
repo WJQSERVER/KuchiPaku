@@ -1,0 +1,162 @@
+<?xml version="1.0" ?>
+<root>
+  <resheader name="resmgr">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="OpenYmmpLabel" xml:space="preserve">
+    <value>Open ymmp</value>
+  </data>
+  <data name="SaveYmmpLabel" xml:space="preserve">
+    <value>Save ymmp</value>
+  </data>
+  <data name="OverwriteLabel" xml:space="preserve">
+    <value>上書きする</value>
+  </data>
+  <data name="BackupSaveLabel" xml:space="preserve">
+    <value>バックアップ保存</value>
+  </data>
+  <data name="OpenWithSaveLabel" xml:space="preserve">
+    <value>保存後YMM4で開く</value>
+  </data>
+  <data name="YmmpPlaceholder" xml:space="preserve">
+    <value>.ymmpファイルを選択してください</value>
+  </data>
+  <data name="CharaLipSyncSettingsHeader" xml:space="preserve">
+    <value>キャラ口パク設定</value>
+  </data>
+  <data name="ExportToggleToolTip" xml:space="preserve">
+    <value>ボタンを押したキャラは出力されなくなります。</value>
+  </data>
+  <data name="LipSyncSetting1" xml:space="preserve">
+    <value>口パク設定1</value>
+  </data>
+  <data name="LipSyncSetting2" xml:space="preserve">
+    <value>口パク設定2</value>
+  </data>
+  <data name="AddButtonLabel" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="LipSyncRuleLabel" xml:space="preserve">
+    <value>口パクルール</value>
+  </data>
+  <data name="StandardRule" xml:space="preserve">
+    <value>標準（PSDToolKit互換）</value>
+  </data>
+  <data name="StandardRuleToolTip" xml:space="preserve">
+    <value>PSDToolKit互換</value>
+  </data>
+  <data name="LipSyncRule2" xml:space="preserve">
+    <value>あいうえお口パク2</value>
+  </data>
+  <data name="OptionsHeader" xml:space="preserve">
+    <value>オプション</value>
+  </data>
+  <data name="EnableVisualLeadLabel" xml:space="preserve">
+    <value>口パク先行させる</value>
+  </data>
+  <data name="VisualLeadHeader" xml:space="preserve">
+    <value>映像先行 msec (66～100):</value>
+  </data>
+  <data name="OthersHeader" xml:space="preserve">
+    <value>そのほか</value>
+  </data>
+  <data name="LicenseButtonLabel" xml:space="preserve">
+    <value>ライセンス</value>
+  </data>
+  <data name="KuchiPakuWebsiteLabel" xml:space="preserve">
+    <value>KuchiPaku公式サイト</value>
+  </data>
+  <data name="YMM4WebsiteLabel" xml:space="preserve">
+    <value>YMM4公式サイト</value>
+  </data>
+  <data name="OpenYmmpDialogTitle" xml:space="preserve">
+    <value>口パクさせるYMM4プロジェクトファイルを選んでください。</value>
+  </data>
+  <data name="YmmpFileFilter" xml:space="preserve">
+    <value>YMM4プロジェクトファイル</value>
+  </data>
+  <data name="YmmpNotLoadedTitle" xml:space="preserve">
+    <value>YMM4プロジェクトが読み込まれていません</value>
+  </data>
+  <data name="YmmpNotLoadedMessage" xml:space="preserve">
+    <value>YMM4プロジェクトファイル(.ymmp)を最初に読み込んでください。</value>
+  </data>
+  <data name="SavingTitle" xml:space="preserve">
+    <value>保存中</value>
+  </data>
+  <data name="SavingMessage" xml:space="preserve">
+    <value>保存しています…</value>
+  </data>
+  <data name="AnalyzingVoiceItemsMessage" xml:space="preserve">
+    <value>ボイスアイテムを解析中…</value>
+  </data>
+  <data name="NoVoiceItemsTitle" xml:space="preserve">
+    <value>ボイスアイテムなし</value>
+  </data>
+  <data name="NoVoiceItemsMessage" xml:space="preserve">
+    <value>対象のボイスアイテムがありませんでした。</value>
+  </data>
+  <data name="FilteringExportItemsMessage" xml:space="preserve">
+    <value>出力対象のフィルタ…</value>
+  </data>
+  <data name="GeneratingCustomVoiceLipSyncMessage" xml:space="preserve">
+    <value>カスタムボイスの口パク生成中…</value>
+  </data>
+  <data name="GeneratingApiVoiceLipSyncMessage" xml:space="preserve">
+    <value>APIボイスの口パク生成中…</value>
+  </data>
+  <data name="SavingFileMessage" xml:space="preserve">
+    <value>ファイル保存中…</value>
+  </data>
+  <data name="SaveYmmpDialogTitle" xml:space="preserve">
+    <value>保存するYMM4プロジェクトファイルを選択</value>
+  </data>
+  <data name="SaveSuccessTitle" xml:space="preserve">
+    <value>保存成功</value>
+  </data>
+  <data name="SaveSuccessMessage" xml:space="preserve">
+    <value>保存しました</value>
+  </data>
+  <data name="FolderNotFoundTitle" xml:space="preserve">
+    <value>ファイルのあるはずのフォルダがみつかりません</value>
+  </data>
+  <data name="FolderNotFoundMessage" xml:space="preserve">
+    <value>キャラの立ち絵の指定されたフォルダがありません。ファイルを丸ごと移動していませんか？</value>
+  </data>
+  <data name="KuchiFolderNotFoundTitle" xml:space="preserve">
+    <value>「口」フォルダがありません</value>
+  </data>
+  <data name="KuchiFolderNotFoundMessage" xml:space="preserve">
+    <value>口パクさせるために、「口」フォルダに画像が置いてある必要があります。</value>
+  </data>
+  <data name="ALine" xml:space="preserve">
+    <value>あ行</value>
+  </data>
+  <data name="ILine" xml:space="preserve">
+    <value>い行</value>
+  </data>
+  <data name="ULine" xml:space="preserve">
+    <value>う行</value>
+  </data>
+  <data name="ELine" xml:space="preserve">
+    <value>え行</value>
+  </data>
+  <data name="OLine" xml:space="preserve">
+    <value>お行</value>
+  </data>
+  <data name="NLine" xml:space="preserve">
+    <value>ん</value>
+  </data>
+  <data name="ConsonantOption_ALL_N" xml:space="preserve">
+    <value>すべて「ん」</value>
+  </data>
+  <data name="ConsonantOption_CONTINUE_BEFORE_VOWEL" xml:space="preserve">
+    <value>前の母音を継続</value>
+  </data>
+  <data name="ConsonantOption_SMALL_MOUSE" xml:space="preserve">
+    <value>口を小さくする</value>
+  </data>
+</root>

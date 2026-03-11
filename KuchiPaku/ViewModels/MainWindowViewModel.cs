@@ -12,12 +12,28 @@ using KuchiPaku.Models;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json.Linq;
 using NLog;
+using KuchiPaku.Resources;
 
 namespace KuchiPaku.ViewModels;
 
 public enum Page
 {
 	Home,
+}
+
+
+public sealed class LocalizedConsonantOption
+{
+    public ConsonantOption Option { get; }
+    public string Name => Option switch
+    {
+        ConsonantOption.ALL_N => Resources.ConsonantOption_ALL_N,
+        ConsonantOption.CONTINUE_BEFORE_VOWEL => Resources.ConsonantOption_CONTINUE_BEFORE_VOWEL,
+        ConsonantOption.SMALL_MOUSE => Resources.ConsonantOption_SMALL_MOUSE,
+        _ => Option.ToString(),
+    };
+
+    public LocalizedConsonantOption(ConsonantOption option) => Option = option;
 }
 
 [ViewModel]
@@ -36,10 +52,10 @@ public sealed class MainWindowViewModel
 
 	public ObservableCollection<LipSyncImageViewModel>? LipSyncImages { get; set; }
 
-	public ConsonantOption CurrentConsonantOption { get; set; } =
-		ConsonantOption.CONTINUE_BEFORE_VOWEL;
-	public IEnumerable<ConsonantOption> ConsonantOptionList { get; set; } =
-		Enum.GetValues<ConsonantOption>().Cast<ConsonantOption>();
+	public LocalizedConsonantOption? CurrentConsonantOption { get; set; } =
+		new LocalizedConsonantOption(ConsonantOption.CONTINUE_BEFORE_VOWEL);
+	public IEnumerable<LocalizedConsonantOption> ConsonantOptionList { get; set; } =
+		Enum.GetValues<ConsonantOption>().Select(o => new LocalizedConsonantOption(o));
 
 	public Command? SaveYmmp { get; set; }
 	public Command? OpenLicenses { get; set; }
@@ -85,11 +101,11 @@ public sealed class MainWindowViewModel
 		{
 			using var cofd = new CommonOpenFileDialog()
 			{
-				Title = "口パクさせるYMM4プロジェクトファイルを選んでください。",
+				Title = Resources.OpenYmmpDialogTitle,
 				RestoreDirectory = true,
 				IsFolderPicker = false,
 			};
-			cofd.Filters.Add(new CommonFileDialogFilter("YMM4プロジェクトファイル", "*.ymmp"));
+			cofd.Filters.Add(new CommonFileDialogFilter(Resources.YmmpFileFilter, "*.ymmp"));
 			if (cofd.ShowDialog() != CommonFileDialogResult.Ok)
 			{
 				return;
@@ -141,18 +157,15 @@ public sealed class MainWindowViewModel
 				{
 					if (CurrentYmmp is null)
 					{
-						Manager.Warn(
-							"YMM4プロジェクトが読み込まれていません",
-							"YMM4プロジェクトファイル(.ymmp)を最初に読み込んでください。"
-						);
+						Manager.Warn(Resources.YmmpNotLoadedTitle, Resources.YmmpNotLoadedMessage);
 						return;
 					}
 
 					var sw = new System.Diagnostics.Stopwatch();
 					sw.Start();
 
-					var loading = Manager.Loading("保存中", "保存しています…");
-					loading.Message = "ボイスアイテムを解析中…";
+					var loading = Manager.Loading(Resources.SavingTitle, Resources.SavingMessage);
+					loading.Message = Resources.AnalyzingVoiceItemsMessage;
 					var ymmp = await YmmpUtil.CopyDeepAsync(CurrentYmmp);
 					var voiceItems = await YmmpUtil.ParseVoiceItemsAsync(ymmp);
 
@@ -163,15 +176,12 @@ public sealed class MainWindowViewModel
 					if (voiceItems is null)
 					{
 						Manager.Dismiss(loading);
-						Manager.Info(
-							"ボイスアイテムなし",
-							"対象のボイスアイテムがありませんでした。"
-						);
+						Manager.Info(Resources.NoVoiceItemsTitle, Resources.NoVoiceItemsMessage);
 						return;
 					}
 
 					//filter exportable
-					loading.Message = "出力対象のフィルタ…";
+					loading.Message = Resources.FilteringExportItemsMessage;
 					var vItems = voiceItems
 						.Where(v =>
 							Characters.Any(c => c.Name == v.Item.CharacterName)
@@ -217,13 +227,13 @@ public sealed class MainWindowViewModel
 					Debug.WriteLine($"TIME[FilterAPIVoiceAsync]:{sw.ElapsedMilliseconds}");
 
 					//出力
-					loading.Message = "ファイル保存中…";
+					loading.Message = Resources.SavingFileMessage;
 					var dir = Directory.Exists(CurrentYmmpPath)
 						? Path.GetDirectoryName(CurrentYmmpPath)!
 						: AppDomain.CurrentDomain.BaseDirectory;
 					using var csfd = new CommonSaveFileDialog()
 					{
-						Title = "保存するYMM4プロジェクトファイルを選択",
+						Title = Resources.SaveYmmpDialogTitle,
 						RestoreDirectory = true,
 						DefaultDirectory = dir,
 						DefaultFileName =
@@ -231,9 +241,7 @@ public sealed class MainWindowViewModel
 							+ (IsSaveBackup ? ".tmp" : "")
 							+ Path.GetExtension(CurrentYmmpPath),
 					};
-					csfd.Filters.Add(
-						new CommonFileDialogFilter("YMM4プロジェクトファイル", "*.ymmp")
-					);
+					csfd.Filters.Add(new CommonFileDialogFilter(Resources.YmmpFileFilter, "*.ymmp"));
 
 					try
 					{
@@ -255,7 +263,7 @@ public sealed class MainWindowViewModel
 					await YmmpUtil.SaveAsync(ymmp, csfd.FileName);
 
 					Manager.Dismiss(loading);
-					Manager.Info("保存成功", "保存しました", true);
+					Manager.Info(Resources.SaveSuccessTitle, Resources.SaveSuccessMessage, true);
 
 					sw.Stop();
 					Debug.WriteLine($"TIME[SaveAsync]:{sw.ElapsedMilliseconds}");
@@ -301,7 +309,7 @@ public sealed class MainWindowViewModel
 		IDictionary<int, int> maxLayer
 	)
 	{
-		loading.Message = "カスタムボイスの口パク生成中…";
+		loading.Message = Resources.GeneratingCustomVoiceLipSyncMessage;
 		var customVoices = await YmmpUtil.FilterCustomVoiceAsync(voiceItems);
 
 		sw.Stop();
@@ -345,7 +353,7 @@ public sealed class MainWindowViewModel
 		IDictionary<int, int> maxLayer
 	)
 	{
-		loading.Message = "APIボイスの口パク生成中…";
+		loading.Message = Resources.GeneratingApiVoiceLipSyncMessage;
 		var apiVoices = await YmmpUtil.FilterAPIVoiceAsync(voiceItems);
 
 		//APIボイスの口パク生成
@@ -405,10 +413,7 @@ public sealed class MainWindowViewModel
 		if (path is null || !Directory.Exists(path))
 		{
 			//パスが無いのをユーザー通知
-			Manager.Warn(
-				"ファイルのあるはずのフォルダがみつかりません",
-				"キャラの立ち絵の指定されたフォルダがありません。ファイルを丸ごと移動していませんか？"
-			);
+			Manager.Warn(Resources.FolderNotFoundTitle, Resources.FolderNotFoundMessage);
 			return;
 		}
 
@@ -416,10 +421,7 @@ public sealed class MainWindowViewModel
 
 		if (kuchiDir is null)
 		{
-			Manager.Warn(
-				"「口」フォルダがありません",
-				"口パクさせるために、「口」フォルダに画像が置いてある必要があります。"
-			);
+			Manager.Warn(Resources.KuchiFolderNotFoundTitle, Resources.KuchiFolderNotFoundMessage);
 			return;
 		}
 
@@ -451,12 +453,12 @@ public sealed class MainWindowViewModel
 			{
 				var lineName = v.Key switch
 				{
-					"a" => "あ行",
-					"i" => "い行",
-					"u" => "う行",
-					"e" => "え行",
-					"o" => "お行",
-					"N" => "ん",
+					"a" => Resources.ALine,
+					"i" => Resources.ILine,
+					"u" => Resources.ULine,
+					"e" => Resources.ELine,
+					"o" => Resources.OLine,
+					"N" => Resources.NLine,
 					_ => "ERROR",
 				};
 				var p = Path.Combine(kuchiDir, Path.GetFileName(v.Value));
@@ -482,11 +484,11 @@ public sealed class MainWindowViewModel
 	}
 
 	[PropertyChanged(nameof(CurrentConsonantOption))]
-	private async ValueTask CurrentConsonantOptionChangedAsync(ConsonantOption opt)
+	private async ValueTask CurrentConsonantOptionChangedAsync(LocalizedConsonantOption opt)
 	{
 		await Application.Current.Dispatcher.InvokeAsync(() =>
 		{
-			LipSyncSettings.AsParallel().ForAll(s => s.Value.ConsonantOption = opt);
+			LipSyncSettings.AsParallel().ForAll(s => s.Value.ConsonantOption = opt.Option);
 		});
 	}
 }
