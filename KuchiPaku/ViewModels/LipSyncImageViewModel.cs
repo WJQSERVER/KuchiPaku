@@ -20,7 +20,6 @@ public class LipSyncImageViewModel
 
 	public string CharacterName { get; set; }
 	public string CharacterDir { get; set; }
-
 	public MainWindowViewModel MainWindowVM { get; set; }
 
 	public int SelectedItemIndex { get; set; }
@@ -48,31 +47,20 @@ public class LipSyncImageViewModel
 
 	[PropertyChanged(nameof(SelectedItemIndex))]
 	private async ValueTask SelectedItemIndexChangedAsync(int index){
-		var selected = ImageList[index] ?? ImageList[0];
+		if (index < 0 || index >= ImageList.Count) return;
+		var selected = ImageList[index];
 		Debug.WriteLine($"SelectedLipSyncItem: {Name} {selected.ImageName}");
 
 		if(MainWindowVM?.LipSyncSettings is null)return;
 		if(!MainWindowVM.LipSyncSettings.TryGetValue(CharacterName, out Models.LipSyncOption? value))return;
 
 		var p = selected.Path;
-		value.MousePhonemeImagePair[Id]
-			= await Task.Run(()=>Path.GetFileName(p)!);
-
+		if (p != null) {
+			value.MousePhonemeImagePair[Id] = await Task.Run(()=>Path.GetFileName(p)!);
+		}
 
 		Debug.WriteLine($"RipSyncSettings[{CharacterName}]:[{Id}]:{Path.GetFileName(selected.Path)!}");
 	}
-
-	 {item.ImageName}");
-
-		if(MainWindowVM?.LipSyncSettings is null)return;
-
-		if(!MainWindowVM.LipSyncSettings.TryGetValue(CharacterName, out Models.LipSyncOption? value))return;
-		value.MousePhonemeImagePair[Id]
-			= await Task.Run(()=>Path.GetFileName(item.Path)!);
-
-		Debug.WriteLine($"RipSyncSettings[{CharacterName}]:[{Id}]:{Path.GetFileName(item.Path)!}");
-	}
-
 }
 
 [ViewModel]
@@ -115,28 +103,4 @@ public class LipSyncImageLineViewModel
 
 		ImageSrc = bi;
 	}
-}
-
-public class LipSyncLine
-{
-	public LipSyncLine(
-		string id,
-		string name,
-		IEnumerable<LipSyncImageLineViewModel> images,
-		string characterDir
-	)
-	{
-		Id = id;
-		Name = name;
-		CharacterDir = characterDir;
-		Images = images;
-	}
-
-	public string Id { get; set; }
-    public string Name { get; set; }
-    public IEnumerable<LipSyncImageLineViewModel> Images { get; set; }
-	public string CharacterDir { get; set; }
-
-	public LipSyncImageLineViewModel? SelectedImage { get; set; }
-
 }

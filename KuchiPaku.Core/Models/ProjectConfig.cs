@@ -8,8 +8,6 @@ namespace KuchiPaku.ModelsData
 
         public static string Serialize(ProjectConfig config)
         {
-            // Use JSON as a robust fallback since Tomlyn 1.x seems to have broken its standard static entry points
-            // in the current environment's netstandard2.0 reference.
             return Newtonsoft.Json.JsonConvert.SerializeObject(config, Newtonsoft.Json.Formatting.Indented);
         }
 

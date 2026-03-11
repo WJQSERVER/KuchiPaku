@@ -143,6 +143,7 @@
 
               <ui:SimpleStackPanel Orientation="Horizontal">
                 <ui:SimpleStackPanel>
+
                   <ListView x:Name="Character"
                     MinHeight="100"
                     Width="200"
@@ -151,7 +152,6 @@
                     ItemsSource="{Binding Characters}"
                     SelectedItem="{Binding SelectedCharaItem, Mode=OneWay}"
                   >
-
                     <ListView.ItemTemplate>
                       <DataTemplate>
                         <Button
@@ -188,8 +188,8 @@
                         </Button>
                       </DataTemplate>
                     </ListView.ItemTemplate>
-
                   </ListView>
+
                   <Separator />
                   <ui:SimpleStackPanel Orientation="Horizontal">
                     <ComboBox x:Name="LipSyncSetting"
@@ -245,6 +245,7 @@
                 </ui:SimpleStackPanel>
 
 
+
                 <ListView x:Name="LipSyncImage"
                   MinHeight="100"
                   Width="300"
@@ -253,7 +254,6 @@
                   Background="{DynamicResource SystemChromeLowColorBrush}"
                   ItemsSource="{Binding LipSyncImages}"
                 >
-
                   <ListView.ItemTemplate>
                     <DataTemplate>
                       <StackPanel Orientation="Horizontal">
@@ -288,8 +288,8 @@
                       </StackPanel>
                     </DataTemplate>
                   </ListView.ItemTemplate>
-
                 </ListView>
+
 
 
                 <ui:SimpleStackPanel
