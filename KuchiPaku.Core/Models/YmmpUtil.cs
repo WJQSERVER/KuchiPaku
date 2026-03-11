@@ -345,11 +345,33 @@ public static partial class YmmpUtil
 			if (newItem is null)
 				continue;
 
-			//lab line to a new item
+
+			// lab line to a new item
 			newItem["Layer"] = insertLayer;
 			newItem["CharacterName"] = lipSyncOption.CharacterName;
-			newItem["TachieFaceParameter"]!["Mouth"] = mouseImagePath;
+
+			// Handle PSD vs Normal Tachie
+			var faceParam = newItem["TachieFaceParameter"];
+			if (faceParam != null)
+			{
+				// Check if the current project character is PSD (this info needs to be passed or derived)
+				// For now, we'll try to infer it from the template or provide a fallback.
+				// Based on YMM4, PSD parameter usually has a different $type and fields.
+
+				if (faceParam["$type"]?.ToString().Contains("Psd") == true)
+				{
+					// PSD item uses layer name string directly
+					faceParam["Mouth"] = imageFileName;
+				}
+				else
+				{
+					// Normal item uses full path
+					faceParam["Mouth"] = mouseImagePath;
+				}
+			}
+
 			newItem["Frame"] = line.FrameFrom + offsetFrame - visualLeadFrames;
+
 			newItem["Length"] = line.FrameLen;
 			newItem["IsLocked"] = isLocked;
 
@@ -370,7 +392,7 @@ public static partial class YmmpUtil
 		return (totalSeconds == 0.0) ? 0 : (int)Math.Round(totalSeconds / 1000 * fps);
 	}
 
-	public static void MakeCustomVoiceFaceItem(
+	public static async Task MakeCustomVoiceFaceItemAsync(
 		IDictionary<int, int> maxLayer,
 		IEnumerable<(int Scene, YmmVoiceItem Item)> customVoices,
 		JObject ymmp,
@@ -384,6 +406,7 @@ public static partial class YmmpUtil
 
 		var tl = GetYmmpTimeline(ymmp);
 		if (tl is null) return;
+		var ymmChara = await ParseCharactersAsync(ymmp);
 
 		var filtered = customVoices
 			.AsParallel()
@@ -412,12 +435,26 @@ public static partial class YmmpUtil
 			await lab.ChangeLengthByRateAsync(v.Item.PlaybackRate);
 			var items = GetVoiceItemsByScene(ymmp, tl);
 
+
 			//(JArray)ymmp!["Timeline"]!["Items"]!;
 			var tachie = new JObject();
 			try
 			{
-				tachie = await ReadTachieTemplateAsync();
+				// Try to get character info to determine tachie type
+				var charaInfo = ymmChara.FirstOrDefault(c => c.Name == v.Item.CharacterName);
+				if (charaInfo?.TachieType == YmmpTachieType.PsdTachie)
+				{
+					// For PSD, we should ideally use a PSD template,
+					// but for now we'll just modify the standard one's type if it's not provided.
+					tachie = await ReadTachieTemplateAsync();
+					tachie["TachieFaceParameter"]!["$type"] = "YukkuriMovieMaker.Plugin.Tachie.Psd.PsdTachieFaceParameter, YukkuriMovieMaker.Plugin.Tachie.Psd";
+				}
+				else
+				{
+					tachie = await ReadTachieTemplateAsync();
+				}
 			}
+
 			catch (System.Exception e)
 			{
 				throw new Exception(e.Message);
@@ -522,11 +559,23 @@ public static partial class YmmpUtil
 
 			var items = GetVoiceItemsByScene(ymmp, tl);
 
+
+			//(JArray)ymmp!["Timeline"]!["Items"]!;
 			var tachie = new JObject();
 			try
 			{
-				tachie = await ReadTachieTemplateAsync();
+				var charaInfo = ymmChara.FirstOrDefault(c => c.Name == v.item.Item.CharacterName);
+				if (charaInfo?.TachieType == YmmpTachieType.PsdTachie)
+				{
+					tachie = await ReadTachieTemplateAsync();
+					tachie["TachieFaceParameter"]!["$type"] = "YukkuriMovieMaker.Plugin.Tachie.Psd.PsdTachieFaceParameter, YukkuriMovieMaker.Plugin.Tachie.Psd";
+				}
+				else
+				{
+					tachie = await ReadTachieTemplateAsync();
+				}
 			}
+
 			catch (System.Exception e)
 			{
 				throw new Exception(e.Message);

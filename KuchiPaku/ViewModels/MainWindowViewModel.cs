@@ -372,7 +372,7 @@ public sealed class MainWindowViewModel
 
 		try
 		{
-			YmmpUtil.MakeCustomVoiceFaceItem(
+			await YmmpUtil.MakeCustomVoiceFaceItemAsync(
 				maxLayer,
 				[.. customVoices],
 				ymmp,
