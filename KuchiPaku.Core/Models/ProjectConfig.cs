@@ -15,7 +15,7 @@ namespace KuchiPaku.ModelsData
 
         public static ProjectConfig Deserialize(string json)
         {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<ProjectConfig>(json);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ProjectConfig>(json) ?? new ProjectConfig();
         }
     }
 

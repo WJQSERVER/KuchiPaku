@@ -144,7 +144,6 @@
               <ui:SimpleStackPanel Orientation="Horizontal">
                 <ui:SimpleStackPanel>
                   <ListView x:Name="Character"
-
                     MinHeight="100"
                     Width="200"
                     BorderBrush="{DynamicResource SystemBaseMediumLowColorBrush}"
@@ -152,7 +151,6 @@
                     ItemsSource="{Binding Characters}"
                     SelectedItem="{Binding SelectedCharaItem, Mode=OneWay}"
                   >
-
 
                     <ListView.ItemTemplate>
                       <DataTemplate>
@@ -174,7 +172,7 @@
                           </ToggleButton>
                           <Grid Background="Transparent">
                             <epoxy:EventBinder.Events>
-                              <epoxy:Event EventName="PreviewMouseLeftButtonDown" Command="{Binding DataContext.ItemClick, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" />
+                              <epoxy:Event EventName="PreviewMouseLeftButtonDown" Command="{Binding DataContext.ItemClick, RelativeSource={RelativeSource AncestorType=Window}}" BindValue="{Binding}" />
                             </epoxy:EventBinder.Events>
                             <TextBlock
                               Margin="10,5,5,5"
@@ -186,6 +184,7 @@
                         </StackPanel>
                       </DataTemplate>
                     </ListView.ItemTemplate>
+
 
 
                   </ListView>
@@ -253,39 +252,41 @@
                   ItemsSource="{Binding LipSyncImages}"
                 >
 
+                  <ListView.ItemTemplate>
+                    <DataTemplate>
+                      <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                          Margin="5"
+                          MinWidth="50"
+                          Text="{Binding Name}"/>
+                        <ComboBox
+                          MinWidth="200"
+                          MaxWidth="300"
+                          Margin="0"
+                          ItemsSource="{Binding ImageList}"
+                          SelectedIndex="{Binding SelectedItemIndex}"
+                          >
+                          <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                              <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                  Text="{Binding ImageName}"
+                                  FontSize="10"
+                                  Width="70"
+                                  />
+                                <Image
+                                  Source="{Binding ImageSrc}"
+                                  Width="100"
+                                  Height="25"
+                                  />
+                              </StackPanel>
+                            </DataTemplate>
+                          </ComboBox.ItemTemplate>
+                        </ComboBox>
+                      </StackPanel>
+                    </DataTemplate>
+                  </ListView.ItemTemplate>
 
-                    <ListView.ItemTemplate>
-                      <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Background="Transparent">
-                          <ToggleButton
-                            ToolTip="{x:Static res:Resources.ExportToggleToolTip}"
-                            Width="20"
-                            Height="20"
-                            Margin="0"
-                            Padding="0"
-                            IsChecked="{Binding IsExport}">
-                            <TextBlock
-                              Text="✔"
-                              Margin="0"
-                              Padding="0"
-                              FontSize="8"
-                              Visibility="{Binding IsExport, Converter={StaticResource BoolToVisible}}"
-                              />
-                          </ToggleButton>
-                          <Grid Background="Transparent">
-                            <epoxy:EventBinder.Events>
-                              <epoxy:Event EventName="PreviewMouseLeftButtonDown" Command="{Binding DataContext.ItemClick, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" />
-                            </epoxy:EventBinder.Events>
-                            <TextBlock
-                              Margin="10,5,5,5"
-                              FontWeight="Bold"
-                              VerticalAlignment="Center"
-                              IsEnabled="{Binding IsExport}"
-                              Text="{Binding Name}"/>
-                          </Grid>
-                        </StackPanel>
-                      </DataTemplate>
-                    </ListView.ItemTemplate>
 
                 </ListView>
 
